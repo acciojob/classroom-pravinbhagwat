@@ -45,16 +45,15 @@ public class StudentRepository {
 
     public Boolean addStudentTeacherPair(String studentName, String teacherName) {
         if(studentMap.containsKey(studentName) && teacherMap.containsKey(teacherName)){
-            if(teacherStudentMap.get(teacherName) == null) {
-                List<String> students = new ArrayList<>();
-                students.add(studentName);
-                teacherStudentMap.put(teacherName, students);
+            List<String> studentsList;
+            if(teacherStudentMap.containsKey(teacherName)) {
+                studentsList = teacherStudentMap.get(teacherName);
             }
             else {
-                List<String> students= teacherStudentMap.get(teacherName);
-                students.add(studentName);
-                teacherStudentMap.put(teacherName, students);
+                studentsList = new ArrayList<>();
             }
+            studentsList.add(studentName);
+            teacherStudentMap.put(teacherName, studentsList);
             return true;
         }
         return false;
