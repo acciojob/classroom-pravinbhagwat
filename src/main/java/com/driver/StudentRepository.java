@@ -65,6 +65,10 @@ public class StudentRepository {
 
     public Boolean deleteTeacherByName(String teacherName) {
         if(teacherMap.containsKey(teacherName)) {
+            List<String> studentList = teacherStudentMap.get(teacherName);
+            for(String s : studentList) {
+                studentMap.remove(s);
+            }
             teacherMap.remove(teacherName);
             teacherStudentMap.remove(teacherName);
             return true;
@@ -73,6 +77,12 @@ public class StudentRepository {
     }
 
     public void deleteAllTeachers() {
+
+        for (String teacherName : teacherStudentMap.keySet()) {
+            for (String students : teacherStudentMap.get(teacherName)) {
+                studentMap.remove(students);
+            }
+        }
         teacherMap.clear();
         teacherStudentMap.clear();
     }
